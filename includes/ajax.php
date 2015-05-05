@@ -44,7 +44,7 @@ function ldl_ajax_contact_form() {
     $name = array_key_exists('senders_name', $_POST) ? sanitize_text_field($_POST['senders_name']) : '';
     $email = array_key_exists('email', $_POST) ? sanitize_text_field($_POST['email']) : '';
     $subject = array_key_exists('subject', $_POST) ? sanitize_text_field($_POST['subject']) : '';
-    $message = array_key_exists('message', $_POST) ? sanitize_text_field($_POST['message']) : '';
+    $message = array_key_exists('message', $_POST) ? $_POST['message'] : '';
     $answer = array_key_exists('math', $_POST) ? sanitize_text_field($_POST['math']) : '';
 
     if (!is_numeric($answer)) {
@@ -95,7 +95,7 @@ function ldl_ajax_contact_form() {
     $rep = array(
         '{post}' => $post_title,
         '{date}' => $subject,
-        '{body}' => str_replace( "\\n", "<br />", htmlspecialchars($message) )
+        '{body}' => nl2br( htmlspecialchars($message) )
     );
 
     $message = nl2br( str_replace( array_keys($rep), $rep, ldl()->get_option('ajax_form_body') ) );
