@@ -93,6 +93,23 @@ function ldl_get_registered_settings() {
             )
         ),
 
+        'ajax_form' => apply_filters('lddlite_settings_ajax_forms',
+            array(
+                'ajax_form_bcc_address' => array(
+                    'id' => 'ajax_form_bcc_address',
+                    'name' => __( 'Bcc Email', 'ldd-directory-lite'),
+                    'desc' => __( 'A blind copy of the ajax Contact Form messages will be sent to this address, Bcc: ', 'ldd-directory-lite'),
+                    'type' => 'text'
+                ),
+                'ajax_form_body' => array(
+                    'id' => 'ajax_form_body',
+                    'name' => __( 'Contact Form format', 'ldd-directory-lite'),
+                    'desc' => __( 'Format for the Contact Form messages. Use {post}, {date} and {body} placeholders for Post title, Wed date and Message body respectively.', 'ldd-directory-lite'),
+                    'type' => 'rich_editor'
+                )
+            )
+        ),
+
         'emails' => apply_filters('lddlite_settings_emails',
             array(
                 'email_from_name' => array(
@@ -351,6 +368,7 @@ function ldl_get_settings_tabs() {
 
 	$tabs             = array();
 	$tabs['general']  = __( 'General', 'ldd-directory-lite');
+    $tabs['ajax_form']   = __( 'Contact form', 'ldd-directory-lite');
     $tabs['emails']   = __( 'Emails', 'ldd-directory-lite');
     $tabs['submit']   = __( 'Submit', 'ldd-directory-lite');
     $tabs['appearance']   = __( 'Appearance', 'ldd-directory-lite');

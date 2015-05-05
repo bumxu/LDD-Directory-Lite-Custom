@@ -40,6 +40,7 @@ function ldl_ajax_contact_form() {
         'fourteen'
     );
 
+    $post_title = array_key_exists('post_title', $_POST) ? sanitize_text_field($_POST['post_title']) : '';
     $name = array_key_exists('senders_name', $_POST) ? sanitize_text_field($_POST['senders_name']) : '';
     $email = array_key_exists('email', $_POST) ? sanitize_text_field($_POST['email']) : '';
     $subject = array_key_exists('subject', $_POST) ? sanitize_text_field($_POST['subject']) : '';
@@ -81,6 +82,23 @@ function ldl_ajax_contact_form() {
 
     $headers = sprintf("From: %s <%s>\r\n", $name, $email);
 
+    // Enable HTML
+    $headers .= "Content-Type: text/html; charset=UTF-8" . "\r\n";
+
+    // Add Bcc
+    $bccopy = ldl()->get_option('ajax_form_bcc_address');
+    if (!empty($bccopy)) {
+        $headers .= sprintf("Bcc: %s\r\n", $bccopy);
+    }
+
+    // Edit body
+    $rep = array(
+        '{post}' => $post_title,
+        '{date}' => $subject,
+        '{body}' => str_replace( "\\n", "<br />", htmlspecialchars($message) )
+    );
+
+    $message = nl2br( str_replace( array_keys($rep), $rep, ldl()->get_option('ajax_form_body') ) );
 
     if (wp_mail($contact_email, $subject, $message, $headers)) {
         $response = array(

@@ -5,6 +5,7 @@
         <?php wp_nonce_field( 'contact-form-nonce', 'nonce' ); ?>
         <input type="hidden" name="action" value="contact_form">
         <input type="hidden" name="post_id" value="<?php echo get_the_ID(); ?>">
+        <input type="hidden" name="post_title" value="<?php echo get_the_title(); ?>">
 
 
         <div class="row bump-down">
